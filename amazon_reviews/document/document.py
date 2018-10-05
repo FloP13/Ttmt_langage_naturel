@@ -3,7 +3,8 @@
 
 
 """
-File for handling a text document.
+File for handling a text document
+TODO: Review _find_sentences and _find_tokens because of semi-working behavior
 """
 
 

@@ -23,8 +23,8 @@ class Interval:
         :param start: start of the range
         :param end: first integer not included the range
         """
-        self.start = int(start)
-        self.end = int(end)
+        self._start = int(start)
+        self._end = int(end)
         if self.start > self.end:
             raise ValueError('Start "{}" must not be greater than end "{}"'.format(self.start, self.end))
         if self.start < 0:
@@ -137,8 +137,24 @@ class Interval:
         Shift the interval
         :param i: The number of index to shift to
         """
-        self.start += i
-        self.end += i
+        self._start += i
+        self._end += i
+
+    @property
+    def start(self):
+        """
+        Start of token in interval
+        :return: Start of token in interval
+        """
+        return self._start
+
+    @property
+    def end(self):
+        """
+        End of token in interval
+        :return: end of token in interval
+        """
+        return self._end
 
 
 class Token(Interval):
@@ -161,8 +177,8 @@ class Token(Interval):
         """
         Interval.__init__(self, start, end)
         self._doc = document
-        self._start = start
-        self._end = end
+        self._start = int(start)
+        self._end = int(end)
         self._pos = pos
         self._shape = shape
         self._text = text
@@ -244,8 +260,8 @@ class Sentence(Interval):
         """
         Interval.__init__(self, start, end)
         self._doc = document
-        self._start = start
-        self._end = end
+        self._start = int(start)
+        self._end = int(end)
 
     def __repr__(self) -> str:
         """
