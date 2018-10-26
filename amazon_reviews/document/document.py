@@ -4,7 +4,6 @@
 
 """
 File for handling a text document
-TODO: Review _find_sentences and _find_tokens because of semi-working behavior
 """
 
 
@@ -24,6 +23,23 @@ class Document:
         self.text = None
         self.tokens = None
         self.sentences = None
+        self._rating = None
+
+    @property
+    def rating(self):
+        """
+        Rating of the document
+        :return: The rating of the document
+        """
+        return self._rating
+
+    @rating.setter
+    def rating(self, r: (int, str, float)) -> None:
+        """
+        Set up the rating of the document
+        :param r: The rate
+        """
+        self._rating = float(r)
 
     @classmethod
     def create_from_text(cls, text: str = None) -> 'Document':
@@ -62,12 +78,12 @@ class Document:
             if pos > -1:
                 if missing:
                     # TODO: Handle linebreak '\n' with 'NL'
-                    t = Token(doc, offset+pos, offset+pos+len(missing['token']), missing['pos_tag'],
+                    t = Token(doc, pos-len(missing['token']), pos-1, missing['pos_tag'],
                               get_shape_category(missing['token']), missing['token'])
                     tokens.append(t)
-                    offset += len(missing['token'])
+                    # offset += len(missing['token'])
                     missing = None
-                t = Token(doc, offset+pos, offset+pos+len(token), pos_tag, get_shape_category(token), token)
+                t = Token(doc, pos, pos+len(token), pos_tag, get_shape_category(token), token)
                 tokens.append(t)
                 offset += len(token)
             else:
@@ -94,11 +110,11 @@ class Document:
             if pos > -1:
                 if missing:
                     # TODO: Handle linebreak '\n' with 'NL'
-                    s = Sentence(doc, offset+pos, offset+pos+len(missing))
+                    s = Sentence(doc, pos-len(missing), pos-1)
                     sentences.append(s)
-                    offset += len(missing)
+                    # offset += len(missing)
                     missing = None
-                s = Sentence(doc, offset+pos, offset+pos+len(sentence))
+                s = Sentence(doc, pos, pos+len(sentence))
                 sentences.append(s)
                 offset += len(sentence)
             else:

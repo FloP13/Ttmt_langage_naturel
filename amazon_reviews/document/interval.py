@@ -8,8 +8,8 @@ From sentences (Sentence) to words (Token)
 """
 
 
-from typing import List
 import re
+from typing import List
 
 
 class Interval:

@@ -4,7 +4,6 @@
 
 """
 Pytest file for the document.py file
-TODO: Test pos_tag
 """
 
 
@@ -26,7 +25,9 @@ def test_Document() -> None:
     Test everything about the Document class
     """
     doc = Document.create_from_text(test_text())
+    doc.rating = 5
     tokens = [token.text for token in doc.tokens]
     sentences = [(sentence.start, sentence.end) for sentence in doc.sentences]
     assert tokens == ['Hello', 'world', '!']
     assert sentences == [(0, 13)]
+    assert doc.rating == 5.0
