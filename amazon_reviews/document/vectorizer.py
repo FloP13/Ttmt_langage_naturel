@@ -44,21 +44,28 @@ class Vectorizer:
         :return: lists of numpy arrays for word, pos and shape features.
                  Each item in the list is a sentence, i.e. a list of indices (one per token)
         """
-        words, pos, shapes = [], [], []
+        nb_max_words = 0
         for doc in documents:
-            w, p, s = [], [], []
+            if len(doc.tokens) > nb_max_words:
+                nb_max_words = len(doc.tokens)
+        words = np.empty((len(documents), nb_max_words))
+        pos = np.empty((len(documents), nb_max_words))
+        shape = np.empty((len(documents), nb_max_words))
+
+        doc_nb=0
+        for doc in documents:
+            word_nb = 0
             for token in doc.tokens:
                 if token.text.lower() in self.word_embeddings.index2word:
-                    w.append(self.word_embeddings.index2word.index(token.text.lower()))
+                    words[doc_nb][word_nb] = self.word_embeddings.index2word.index(token.text.lower())
                 else:
-                    w.append(0)
-                p.append(self.pos2index[token.pos])
-                s.append(self.shape2index[token.shape])
-            words.append(w)
-            pos.append(p)
-            shapes.append(s)
-        return np.asarray(words, dtype=np.int32), np.asarray(pos, dtype=np.int8), np.asarray(shapes, dtype=np.int8)
-
+                    words[doc_nb][word_nb] = 0
+                pos[doc_nb][word_nb] = self.pos2index[token.pos]
+                shape[doc_nb][word_nb] = self.shape2index[token.shape]
+                word_nb = word_nb + 1
+            doc_nb = doc_nb + 1
+        return words, pos, shape
+        
     def encode_annotations(self, documents: List[Document]) -> np.array:
         """
         Creates the Y matrix representing the annotations (or true positives) of a list of documents
