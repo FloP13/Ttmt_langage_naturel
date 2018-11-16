@@ -12,9 +12,7 @@ from typing import List, Tuple
 import numpy as np
 from gensim.models import KeyedVectors
 from .document import Document
-
-
-DATA_DIR = f'.{os.sep}..{os.sep}..{os.sep}glove.6B'
+from config import GLOVE_DIR
 
 
 class Vectorizer:
@@ -26,7 +24,7 @@ class Vectorizer:
         """
         :param word_embedding_path: path to gensim embedding file
         """
-        filename = os.path.join(DATA_DIR, word_embedding_path)
+        filename = os.path.join(GLOVE_DIR, word_embedding_path)
         self.word_embeddings = KeyedVectors.load_word2vec_format(filename, binary=False)
         self.pos2index = {'PAD': 0, 'TO': 1, 'VBN': 2, "''": 3, 'WP': 4, 'UH': 5, 'VBG': 6, 'JJ': 7, 'VBZ': 8,
                           '--': 9, 'VBP': 10, 'NN': 11, 'DT': 12, 'PRP': 13, ':': 14, 'WP$': 15, 'NNPS': 16,
