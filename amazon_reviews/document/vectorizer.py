@@ -50,10 +50,15 @@ class Vectorizer:
         for doc in documents:
             w, p, s = [], [], []
             for token in doc.tokens:
-                w.append(self.word_embeddings.index2word.index(token.text.lower()))
+                if token.text.lower() in self.word_embeddings.index2word:
+                    w.append(self.word_embeddings.index2word.index(token.text.lower()))
+                else:
+                    w.append(0)
                 p.append(self.pos2index[token.pos])
                 s.append(self.shape2index[token.shape])
-            words.append(w); pos.append(p); shapes.append(s)
+            words.append(w)
+            pos.append(p)
+            shapes.append(s)
         return np.asarray(words, dtype=np.int32), np.asarray(pos, dtype=np.int8), np.asarray(shapes, dtype=np.int8)
 
     def encode_annotations(self, documents: List[Document]) -> np.array:
