@@ -12,20 +12,22 @@ from amazon_reviews.document import Document
 
 
 @pytest.fixture
-def test_text() -> str:
+def document_setup() -> Document:
     """
     A standard text as use case
     :return: A test text
     """
-    return """Hello world !"""
+    txt = """Hello world !"""
+    doc = Document.create_from_text(txt)
+    doc.rating = 5
+    return doc
 
 
 def test_Document() -> None:
     """
     Test everything about the Document class
     """
-    doc = Document.create_from_text(test_text())
-    doc.rating = 5
+    doc = document_setup()
     tokens = [token.text for token in doc.tokens]
     sentences = [(sentence.start, sentence.end) for sentence in doc.sentences]
     assert tokens == ['Hello', 'world', '!']

@@ -5,3 +5,4 @@
 from .interval import Token, Interval, Sentence
 from .document import Document
 from .parser import AmazonReviewParser
+from .vectorizer import Vectorizer

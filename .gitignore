@@ -1,3 +1,4 @@
 .pytest_cache
 .idea
+glove.6B
 __pycache__
