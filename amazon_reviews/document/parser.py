@@ -12,7 +12,7 @@ from typing import List
 from .document import Document
 
 
-class Parser(object):
+class Parser:
     """
     Parent class for all parser
     """

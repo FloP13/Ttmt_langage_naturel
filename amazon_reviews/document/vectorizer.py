@@ -11,7 +11,6 @@ import os
 from typing import List, Tuple
 import numpy as np
 from gensim.models import KeyedVectors
-from .document import Document
 from config import GLOVE_DIR
 
 
@@ -20,8 +19,9 @@ class Vectorizer:
     Transform a string into a vector representation
     """
 
-    def __init__(self, word_embedding_path: str):
+    def __init__(self, word_embedding_path: str) -> None:
         """
+        initialize the class
         :param word_embedding_path: path to gensim embedding file
         """
         filename = os.path.join(GLOVE_DIR, word_embedding_path)
@@ -36,7 +36,8 @@ class Vectorizer:
                             '1ST-CAP': 4, 'LOWER': 5, 'MISC': 6}
         self.labels2index = {1: 0, 2: 0, 3: 0, 4: 1, 5: 1}
 
-    def encode_features(self, documents: List[Document]) -> Tuple[np.array, np.array, np.array]:
+    def encode_features(self, documents: List['amazon_reviews.document.Document'])\
+            -> Tuple['np.ndarray', 'np.ndarray', 'np.ndarray']:
         """
         TODO: Use numpy array instead of list
         Creates a feature matrix for all documents in the sample list
@@ -59,10 +60,10 @@ class Vectorizer:
             shapes.append(s)
         return np.asarray(words, dtype=np.int32), np.asarray(pos, dtype=np.int8), np.asarray(shapes, dtype=np.int8)
 
-    def encode_annotations(self, documents: List[Document]) -> np.array:
+    def encode_annotations(self, documents: List['amazon_reviews.document.Document']) -> 'np.ndarray':
         """
         Creates the Y matrix representing the annotations (or true positives) of a list of documents
         :param documents: list of documents to be converted in annotations vector
-        :return: numpy array. Each item in the list is a sentence, i.e. a list of labels (one per token)
+        :return: A numpy array where each item in the list is a sentence, i.e. a list of labels (one per token)
         """
         return np.asarray([self.labels2index[doc.rating] for doc in documents], dtype=np.int8)

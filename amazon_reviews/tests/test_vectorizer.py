@@ -3,7 +3,7 @@
 
 
 """
-Pytest file for the vectorizer.py file
+Pytest file for the document/vectorizer.py file
 """
 
 

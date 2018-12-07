@@ -4,7 +4,7 @@
 
 """
 File for handling everything related to an Interval in a text document.
-From sentences (Sentence) to words (Token)
+From sentences `Sentence` to words `Token`
 """
 
 
@@ -37,7 +37,7 @@ class Interval:
         """
         return self.end - self.start
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: 'Interval') -> bool:
         """
         Check if this interval and an other are equal
         :param other: The Interval object to be compared with
@@ -45,7 +45,7 @@ class Interval:
         """
         return self.start == other.start and self.end == other.end
 
-    def __ne__(self, other):
+    def __ne__(self, other: 'Interval') -> bool:
         """
         Check if this interval and an other are not equal
         :param other: The Interval object to be compared with
@@ -53,7 +53,7 @@ class Interval:
         """
         return self.start != other.start or self.end != other.end
 
-    def __lt__(self, other):
+    def __lt__(self, other: 'Interval') -> bool:
         """
         Check if this interval is lesser than an other Interval
         :param other: The Interval object to be compared with
@@ -61,7 +61,7 @@ class Interval:
         """
         return (self.start, -len(self)) < (other.start, -len(other))
 
-    def __le__(self, other):
+    def __le__(self, other: 'Interval') -> bool:
         """
         Check if this interval is lesser or equal than an other Interval
         :param other: The Interval object to be compared with
@@ -69,7 +69,7 @@ class Interval:
         """
         return (self.start, -len(self)) <= (other.start, -len(other))
 
-    def __gt__(self, other):
+    def __gt__(self, other: 'Interval') -> bool:
         """
         Check if this interval is greater than an other Interval
         :param other: The Interval object to be compared with
@@ -77,7 +77,7 @@ class Interval:
         """
         return (self.start, -len(self)) > (other.start, -len(other))
 
-    def __ge__(self, other):
+    def __ge__(self, other: 'Interval') -> bool:
         """
         Check if this interval is greater or equal than an other Interval
         :param other: The Interval object to be compared with
@@ -85,17 +85,18 @@ class Interval:
         """
         return (self.start, -len(self)) >= (other.start, -len(other))
 
-    def __hash__(self):
+    def __hash__(self) -> hash:
         """
         Compute the hash of the interval object
         :return: Hash of the interval object
         """
         return hash(tuple(v for k, v in sorted(self.__dict__.items())))
 
-    def __contains__(self, item: int):
+    def __contains__(self, item: int) -> bool:
         """
         Return self.start <= item < self.end
         :param item: The index of the item to be checked
+        :return: If the element is in the Interval or not
         """
         return self.start <= item < self.end
 
@@ -132,7 +133,7 @@ class Interval:
         a, b = sorted((self, other))
         return a.end > b.start
 
-    def shift(self, i: int):
+    def shift(self, i: int) -> None:
         """
         Shift the interval
         :param i: The number of index to shift to
@@ -141,7 +142,7 @@ class Interval:
         self._end += i
 
     @property
-    def start(self):
+    def start(self) -> int:
         """
         Start of token in interval
         :return: Start of token in interval
@@ -149,7 +150,7 @@ class Interval:
         return self._start
 
     @property
-    def end(self):
+    def end(self) -> int:
         """
         End of token in interval
         :return: end of token in interval
@@ -271,7 +272,7 @@ class Sentence(Interval):
         return 'Sentence({}, {})'.format(self.start, self.end)
 
     @property
-    def tokens(self) -> 'List[Token]':
+    def tokens(self) -> List['Token']:
         """
         Get list of tokens contained in a sentence
         :return: the list of tokens contained in a sentence

@@ -7,8 +7,9 @@ File for handling a text document
 """
 
 
+from typing import List
 import nltk
-from .interval import *
+from .interval import Token, Sentence, get_shape_category
 
 
 class Document:
@@ -60,7 +61,7 @@ class Document:
         return doc
 
     @staticmethod
-    def _find_tokens(doc: 'Document', word_tokens: List[str], pos_tags: List[str], text: str) -> 'List[Token]':
+    def _find_tokens(doc: 'Document', word_tokens: List[str], pos_tags: List[str], text: str) -> List[Token]:
         """
         Calculate the span of each token, find which element it belongs to and create a new Token instance
         :param doc: Reference to documents instance
@@ -94,7 +95,7 @@ class Document:
         return tokens
 
     @staticmethod
-    def _find_sentences(doc: 'Document', sentences_tokens: List[str], text: str) -> 'List[Sentence]':
+    def _find_sentences(doc: 'Document', sentences_tokens: List[str], text: str) -> List[Sentence]:
         """
         List Sentence objects each time a sentence is found in the text
         :param doc: reference to documents instance
