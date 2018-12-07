@@ -23,7 +23,7 @@ class Parser:
         :param filename: The file path to load
         :return: The constructed Document
         """
-        docs = list()
+        docs = []
         with open(filename, 'r', encoding='utf-8') as fp:
             for line in fp.readlines():
                 d = self.read(line)
