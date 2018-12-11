@@ -4,6 +4,37 @@
 
 """
 Pytest file for the neural_network/recurrent.py file
-TODO: Implement all the `pass` function
+Wrapper functions are not tested
+TODO: Implement the pass function
 """
 
+
+import pytest
+import numpy as np
+from keras.models import Model
+from amazon_reviews.neural_network.recurrent import RecurrentNeuralNetwork
+from amazon_reviews.document import Vectorizer
+
+
+def test_RecurrentNeuralNetwork_build_classification() -> None:
+    """
+    Test The build_classification class method
+    """
+    vectorizer = Vectorizer('glove.6B.50d.txt')
+    input_shape = {
+        'pos': (len(vectorizer.pos2index), 10),
+        'shape': (len(vectorizer.shape2index), 2)
+    }
+    out_shape = len(vectorizer.labels2index)
+    rnn = RecurrentNeuralNetwork.build_classification(vectorizer.word_embeddings, input_shape, out_shape)
+    assert isinstance(rnn._model, Model)
+
+
+def test_RecurrentNeuralNetwork_probas_to_classes():
+    """
+    Test The probas_to_classes class method
+    """
+    arr1 = np.asarray([0.1, 0.2, 0.7], dtype=np.float32)
+    arr2 = np.asarray([0.1], dtype=np.float32)
+    assert RecurrentNeuralNetwork.probas_to_classes(arr1) == 2
+    assert RecurrentNeuralNetwork.probas_to_classes(arr2) == np.asarray([0], dtype=np.int32)

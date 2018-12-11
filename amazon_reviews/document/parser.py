@@ -3,13 +3,15 @@
 
 
 """
-File for parsing documents
+Package for parsing documents
 """
 
 
+import os
 import json
-from typing import List
+from typing import List, Optional
 from .document import Document
+from config import DATA_DIR
 
 
 class Parser:
@@ -24,10 +26,12 @@ class Parser:
         :return: The constructed Document
         """
         docs = []
-        with open(filename, 'r', encoding='utf-8') as fp:
+        filepath = os.path.join(DATA_DIR, filename)
+        with open(filepath, 'r', encoding='utf-8') as fp:
             for line in fp.readlines():
                 d = self.read(line)
-                docs.append(d)
+                if d is not None:
+                    docs.append(d)
         return docs
 
     def read(self, content: str) -> Document:
@@ -44,13 +48,15 @@ class AmazonReviewParser(Parser):
     Class for parsing a Review from Amazon
     """
 
-    def read(self, content: str) -> Document:
+    def read(self, content: str) -> Optional[Document]:
         """
-        Read the content of the file and return a Document
+        Read the content of the file and return a Document if the doc is non empty
         :param content: The content of the the text
         :return: The constructed Document
         """
         reviews = json.loads(content)
-        doc = Document().create_from_text(reviews['reviewText'])
-        doc.rating = reviews['overall']
-        return doc
+        if reviews['reviewText'] and reviews['overall']:
+            doc = Document().create_from_text(reviews['reviewText'])
+            doc.rating = reviews['overall']
+            return doc
+        return None

@@ -3,7 +3,7 @@
 
 
 """
-File for handling everything related to an Interval in a text document.
+Package for handling everything related to an Interval in a text document.
 From sentences `Sentence` to words `Token`
 """
 
@@ -26,9 +26,9 @@ class Interval:
         self._start = int(start)
         self._end = int(end)
         if self.start > self.end:
-            raise ValueError('Start "{}" must not be greater than end "{}"'.format(self.start, self.end))
+            raise ValueError(f"Start '{self.start}' must not be greater than end '{self.end}'")
         if self.start < 0:
-            raise ValueError('Start "{}" must not be negative'.format(self.start))
+            raise ValueError(f"Start '{self.start}' must not be negative")
 
     def __len__(self) -> int:
         """
@@ -163,7 +163,8 @@ class Token(Interval):
     A Interval representing word like units of text with a dictionary of features
     """
 
-    def __init__(self, document: 'Document', start: int, end: int, pos: str, shape: str, text: str) -> None:
+    def __init__(self, document: 'amazon_reviews.document.Document', start: int, end: int,
+                 pos: str, shape: str, text: str) -> None:
         """
         Constructor of the Token class
         Note that a token has 2 text representations.
@@ -225,7 +226,7 @@ class Token(Interval):
         return self._end
 
     @property
-    def document(self) -> 'Document':
+    def document(self) -> 'amazon_reviews.document.Document':
         """
         The document object containing the token
         :return: the document object containing the token
@@ -252,7 +253,7 @@ class Sentence(Interval):
     Interval corresponding to a Sentence
     """
 
-    def __init__(self, document: 'Document', start: int, end: int) -> None:
+    def __init__(self, document: 'amazon_reviews.document.Document', start: int, end: int) -> None:
         """
         Constructor of the Sentence class
         :param document: the document object containing the token
@@ -280,7 +281,7 @@ class Sentence(Interval):
         return [token for token in self._doc.tokens if self.overlaps(token)]
 
     @property
-    def document(self) -> 'Document':
+    def document(self) -> 'amazon_reviews.document.Document':
         """
         The document object containing the sentence
         :return: the document object containing the token

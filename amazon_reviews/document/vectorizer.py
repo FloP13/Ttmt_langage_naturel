@@ -3,7 +3,7 @@
 
 
 """
-File for for vectorizing documents
+Package for for vectorizing documents
 """
 
 
@@ -31,7 +31,7 @@ class Vectorizer:
                           'PRP$': 17, 'WDT': 18, '(': 19, ')': 20, '.': 21, ',': 22, '``': 23, '$': 24, 'RB': 25,
                           'RBR': 26, 'RBS': 27, 'VBD': 28, 'IN': 29, 'FW': 30, 'RP': 31, 'JJR': 32, 'JJS': 33,
                           'PDT': 34, 'MD': 35, 'VB': 36, 'WRB': 37, 'NNP': 38, 'EX': 39, 'NNS': 40, 'SYM': 41,
-                          'CC': 42, 'CD': 43, 'POS': 44, 'LS': 45}
+                          'CC': 42, 'CD': 43, 'POS': 44, 'LS': 45, '#': 46}
         self.shape2index = {'NL': 0, 'NUMBER': 1, 'SPECIAL': 2, 'ALL-CAPS': 3,
                             '1ST-CAP': 4, 'LOWER': 5, 'MISC': 6}
         self.labels2index = {1: 0, 2: 0, 3: 0, 4: 1, 5: 1}

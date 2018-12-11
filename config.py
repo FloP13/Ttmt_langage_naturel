@@ -10,5 +10,5 @@ Config file for for the amazon_commentary_categorization
 """
 
 
-DATA_DIR = f'{os.path.dirname(os.path.realpath(__file__))}{os.sep}amazon_reviews_datas'
-GLOVE_DIR = f'{os.path.dirname(os.path.realpath(__file__))}{os.sep}glove.6B'
+DATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'amazon_reviews_datas')
+GLOVE_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'glove.6B')

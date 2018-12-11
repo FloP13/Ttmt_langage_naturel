@@ -3,7 +3,7 @@
 
 
 """
-File for handling a text document
+Package for handling a text document
 """
 
 
@@ -79,8 +79,8 @@ class Document:
             if pos > -1:
                 if missing:
                     # TODO: Handle linebreak '\n' with 'NL'
-                    t = Token(doc, pos-len(missing['token']), pos-1, missing['pos_tag'],
-                              get_shape_category(missing['token']), missing['token'])
+                    t = Token(doc, pos - 1 if missing['token'] == '``' else len(missing['token']), pos - 1,
+                              missing['pos_tag'], get_shape_category(missing['token']), missing['token'])
                     tokens.append(t)
                     # offset += len(missing['token'])
                     missing = None

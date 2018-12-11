@@ -3,12 +3,12 @@
 
 
 """
-Define recurrent Neural network models
+Package which define recurrent Neural network models
 """
 
 
 from keras.layers import concatenate, Input, Embedding, Dropout, Bidirectional, LSTM, Dense
-from keras.models import Model, load_model, save_model
+from keras.models import Model, load_model
 
 
 class RecurrentNeuralNetwork:
@@ -70,10 +70,7 @@ class RecurrentNeuralNetwork:
         :param proba: The vector of probability of classes
         :return: The ID of the class with the highest probability
         """
-        if proba.shape[-1] > 1:
-            return proba.argmax(axis=-1)
-        else:
-            return (proba > 0.5).astype('int32')
+        return proba.argmax(axis=-1) if proba.shape[-1] > 1 else (proba > 0.5).astype('int32')
 
     @classmethod
     def build_classification(cls, word_embeddings: 'gensim.models.word2vec.Wod2Vec', input_shape: dict, out_shape: int,
@@ -91,7 +88,7 @@ class RecurrentNeuralNetwork:
         word_input = Input(shape=(None,), dtype='int32', name='word_input')
         weights = word_embeddings.syn0
         word_embeddings = Embedding(input_dim=weights.shape[0], output_dim=weights.shape[1],
-                                    weights=[weights], name="word_embeddings_layer", trainable=False,
+                                    weights=[weights], name='word_embeddings_layer', trainable=False,
                                     mask_zero=True)(word_input)
         pos_input = Input(shape=(None,), dtype='int32', name='pos_input')
         pos_embeddings = Embedding(input_shape['pos'][0], input_shape['pos'][1], name='pos_embeddings_layer',
@@ -104,7 +101,7 @@ class RecurrentNeuralNetwork:
         lstm = LSTM(units, activation='tanh', name='lstm')(bilstm)
         lstm_layer = Dropout(dropout_rate, name='second_dropout')(lstm)
         output = Dense(out_shape, activation='sigmoid', name='output')(lstm_layer)
-        model = Model(inputs=[word_input], outputs=output)
+        model = Model(inputs=[word_input, pos_input, shape_input], outputs=output)
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         print(model.summary())
         return RecurrentNeuralNetwork(model)
@@ -112,7 +109,7 @@ class RecurrentNeuralNetwork:
     @classmethod
     def load(cls, filename: str) -> 'RecurrentNeuralNetwork':
         """
-        Load the models from a file
+        Wrapper around `Model.load_model` to load a model
         :param filename: The filename to use for loading
         :return: An initialized `RecurrentNeuralNetwork` object
         """
@@ -120,8 +117,7 @@ class RecurrentNeuralNetwork:
 
     def save(self, filename: str) -> None:
         """
-        Save the models as a File
+        Wrapper around `Model.save` to save a model
         :param filename: The filename to use for saving
         """
-        save_model(self._model, filename)
         self._model.save(filename)

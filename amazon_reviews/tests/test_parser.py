@@ -17,7 +17,7 @@ def test_review_file_path() -> str:
     Get the path of the amazon review file
     :return: The path of the amazon review file
     """
-    return './ressources/amazon_review_test.json'
+    return '../amazon_reviews/tests/ressources/amazon_review_test.json'
 
 
 def test_AmazonReviewParser() -> None:
