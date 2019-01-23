@@ -8,6 +8,7 @@ Pytest file for the document/vectorizer.py file
 
 
 import pytest
+
 from amazon_reviews.document import Vectorizer
 from .test_document import document_setup
 

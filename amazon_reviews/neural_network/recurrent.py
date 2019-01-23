@@ -7,8 +7,8 @@ Package which define recurrent Neural network models
 """
 
 
-from keras.layers import concatenate, Input, Embedding, Dropout, Bidirectional, LSTM, Dense
-from keras.models import Model, load_model
+from keras.layers import Bidirectional, concatenate, Dense, Dropout, Embedding, Input, LSTM
+from keras.models import load_model, Model
 
 
 class RecurrentNeuralNetwork:
@@ -70,7 +70,7 @@ class RecurrentNeuralNetwork:
         :param proba: The vector of probability of classes
         :return: The ID of the class with the highest probability
         """
-        return proba.argmax(axis=-1) if proba.shape[-1] > 1 else (proba > 0.5).astype('int32')
+        return proba.argmax(axis=-1) if proba.shape[-1] > 1 else int(round(proba[0]))
 
     @classmethod
     def build_classification(cls, word_embeddings: 'gensim.models.word2vec.Wod2Vec', input_shape: dict, out_shape: int,

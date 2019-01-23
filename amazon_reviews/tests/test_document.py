@@ -8,6 +8,7 @@ Pytest file for the document/document.py file
 
 
 import pytest
+
 from amazon_reviews.document import Document
 
 

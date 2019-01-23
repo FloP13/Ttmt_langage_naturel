@@ -5,15 +5,15 @@
 """
 Pytest file for the neural_network/recurrent.py file
 Wrapper functions are not tested
-TODO: Implement the pass function
 """
 
 
-import pytest
-import numpy as np
 from keras.models import Model
-from amazon_reviews.neural_network.recurrent import RecurrentNeuralNetwork
+import numpy as np
+import pytest
+
 from amazon_reviews.document import Vectorizer
+from amazon_reviews.neural_network.recurrent import RecurrentNeuralNetwork
 
 
 def test_RecurrentNeuralNetwork_build_classification() -> None:
@@ -37,4 +37,4 @@ def test_RecurrentNeuralNetwork_probas_to_classes():
     arr1 = np.asarray([0.1, 0.2, 0.7], dtype=np.float32)
     arr2 = np.asarray([0.1], dtype=np.float32)
     assert RecurrentNeuralNetwork.probas_to_classes(arr1) == 2
-    assert RecurrentNeuralNetwork.probas_to_classes(arr2) == np.asarray([0], dtype=np.int32)
+    assert RecurrentNeuralNetwork.probas_to_classes(arr2) == 0

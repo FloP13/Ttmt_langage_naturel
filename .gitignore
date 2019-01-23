@@ -1,4 +1,6 @@
-.pytest_cache
-.idea
-glove.6B
-__pycache__
+.pytest_cache/
+.idea/
+glove.6B/
+models_save/
+others/
+__pycache__/

@@ -8,8 +8,10 @@ Package for handling a text document
 
 
 from typing import List
+
 import nltk
-from .interval import Token, Sentence, get_shape_category
+
+from .interval import get_shape_category, Sentence, Token
 
 
 class Document:

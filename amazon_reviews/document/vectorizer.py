@@ -9,8 +9,10 @@ Package for for vectorizing documents
 
 import os
 from typing import List, Tuple
-import numpy as np
+
 from gensim.models import KeyedVectors
+import numpy as np
+
 from config import GLOVE_DIR
 
 
