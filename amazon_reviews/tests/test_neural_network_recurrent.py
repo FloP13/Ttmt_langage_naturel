@@ -25,8 +25,7 @@ def test_RecurrentNeuralNetwork_build_classification() -> None:
         'pos': (len(vectorizer.pos2index), 10),
         'shape': (len(vectorizer.shape2index), 2)
     }
-    out_shape = len(vectorizer.labels2index)
-    rnn = RecurrentNeuralNetwork.build_classification(vectorizer.word_embeddings, input_shape, out_shape)
+    rnn = RecurrentNeuralNetwork.build_classification(vectorizer.word_embeddings, input_shape, 1)
     assert isinstance(rnn._model, Model)
 
 
