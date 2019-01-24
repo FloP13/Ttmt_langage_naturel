@@ -59,11 +59,12 @@ def test_Token() -> None:
     assert str(token) == 'Token(toto, 0, 5)'
 
 
-def test_Sentence() -> None:
+def test_Sentence(test_text: str) -> None:
     """
     Test everything about the Token class
+    :param test_text: The test text fixture to test on
     """
-    doc = Document.create_from_text(test_text())
+    doc = Document.create_from_text(test_text)
     sentence = Sentence(doc, 0, 13)
     # assert sentence.document == doc
     assert sentence.start == 0

@@ -20,7 +20,8 @@ class Parser:
     Parent class for all parser
     """
 
-    def read_file(self, filename: str) -> List[Document]:
+    @classmethod
+    def read_file(cls, filename: str) -> List[Document]:
         """
         Read a file and return a Document
         :param filename: The file path to load
@@ -30,12 +31,13 @@ class Parser:
         filepath = os.path.join(DATA_DIR, filename)
         with open(filepath, 'r', encoding='utf-8') as fp:
             for line in fp.readlines():
-                d = self.read(line)
-                if d is not None:
-                    docs.append(d)
+                doc = cls.read(line)
+                if doc is not None:
+                    docs.append(doc)
         return docs
 
-    def read(self, content: str) -> Document:
+    @classmethod
+    def read(cls, content: str) -> Document:
         """
         Read the content of the file and return a Document
         :param content: The content of the the text
@@ -49,7 +51,8 @@ class AmazonReviewParser(Parser):
     Class for parsing a Review from Amazon
     """
 
-    def read(self, content: str) -> Optional[Document]:
+    @classmethod
+    def read(cls, content: str) -> Optional[Document]:
         """
         Read the content of the file and return a Document if the doc is non empty
         :param content: The content of the the text
@@ -57,7 +60,7 @@ class AmazonReviewParser(Parser):
         """
         reviews = json.loads(content)
         if reviews['reviewText'] and reviews['overall']:
-            doc = Document().create_from_text(reviews['reviewText'])
+            doc = Document.create_from_text(reviews['reviewText'])
             doc.rating = reviews['overall']
             return doc
         return None

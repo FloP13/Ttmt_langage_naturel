@@ -48,17 +48,17 @@ class Document:
     def create_from_text(cls, text: str = None) -> 'Document':
         """
         Initialize a Document object from a text
+        1. Tokenize text (tokens & sentences)
+        2. Find tokens intervals
+        3. Find sentences intervals
         :param text: document text as a string
         :return: The document text as Document object
         """
         doc = Document()
         doc.text = text
-        # 1. Tokenize text (tokens & sentences)
         words, pos_tags = zip(*nltk.pos_tag(nltk.word_tokenize(text)))
         sentences = nltk.sent_tokenize(text.replace('\n', ' '))
-        # 2. Find tokens intervals
         doc.tokens = Document._find_tokens(doc, words, pos_tags, text)
-        # 3. Find sentences intervals
         doc.sentences = Document._find_sentences(doc, sentences, text)
         return doc
 

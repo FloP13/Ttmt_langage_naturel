@@ -21,11 +21,12 @@ def test_review_file_path() -> str:
     return '../amazon_reviews/tests/ressources/amazon_review_test.json'
 
 
-def test_AmazonReviewParser() -> None:
+def test_AmazonReviewParser(test_review_file_path: str) -> None:
     """
     Test the AmazonReviewParser Class
+    :param test_review_file_path: The filepath fixture to the review
     """
-    docs = AmazonReviewParser().read_file(test_review_file_path())
+    docs = AmazonReviewParser.read_file(test_review_file_path)
     assert docs[0].text == 'Doudoux le doux !'
     assert docs[0].rating == 5.0
     assert docs[1].text == 'Flo le déglingo !'

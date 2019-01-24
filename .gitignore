@@ -3,4 +3,5 @@
 glove.6B/
 models_save/
 others/
+tf_logs/
 __pycache__/

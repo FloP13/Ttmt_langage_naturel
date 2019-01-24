@@ -3,7 +3,8 @@
 
 
 """
-Test the neural network model, can be launched from the command line prompt
+Package which test the neural network model,
+can be launched from the command line
 """
 
 
@@ -17,7 +18,7 @@ def _is_rating_concordant_comment(comment: int, rating: int) -> bool:
     """
     Check if a rating and a comment are concordant
     :param comment: The status of a comment (negative: 0, positive: 1)
-    :param rating: The rating of the document
+    :param rating: The rating of the document (1 to 5)
     :return: If a rating and a comment are concordant
     """
     if rating <= 3 and comment == 0:

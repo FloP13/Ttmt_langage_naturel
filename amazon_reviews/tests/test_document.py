@@ -13,7 +13,7 @@ from amazon_reviews.document import Document
 
 
 @pytest.fixture
-def document_setup() -> Document:
+def document() -> Document:
     """
     A standard text as use case
     :return: A test text
@@ -24,13 +24,13 @@ def document_setup() -> Document:
     return doc
 
 
-def test_Document() -> None:
+def test_Document(document: Document) -> None:
     """
     Test everything about the Document class
+    :param document: The fixture document to run test on
     """
-    doc = document_setup()
-    tokens = [token.text for token in doc.tokens]
-    sentences = [(sentence.start, sentence.end) for sentence in doc.sentences]
+    tokens = [token.text for token in document.tokens]
+    sentences = [(sentence.start, sentence.end) for sentence in document.sentences]
     assert tokens == ['Hello', 'world', '!']
     assert sentences == [(0, 13)]
-    assert doc.rating == 5.0
+    assert document.rating == 5.0

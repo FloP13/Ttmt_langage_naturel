@@ -6,7 +6,7 @@ import os
 
 
 """
-Config file for for the amazon_commentary_categorization
+Config file for for the amazon_commentary_categorization project
 """
 
 
